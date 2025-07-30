@@ -6,13 +6,13 @@ import SignUp from './components/SignUp';
 import NotFound from './components/NotFound';
 import Navbar from './components/Navbar';
 import Dashboard from './components/Dashboard';
-import ProtectedRoute from './components/ProtectedRoute';
-import { useSelector } from 'react-redux';
+// import ProtectedRoute from './components/ProtectedRoute';
+// import { useSelector } from 'react-redux';
 import About from './components/About';
 function App() {
 
 //const isAuthenticated = false; // Replace with your auth logic
-const isAuthenticated = useSelector((state:any) => state.auth.isAuthenticated);
+// const isAuthenticated = useSelector((state:any) => state.auth.isAuthenticated);
   return (
     <>
       <div>
@@ -21,14 +21,15 @@ const isAuthenticated = useSelector((state:any) => state.auth.isAuthenticated);
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/about" element={<About />} />
-      <Route
+        <Route path="/dashboard" element={<Dashboard />} />
+      {/* <Route
           path="/dashboard"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
               <Dashboard />
             </ProtectedRoute>
           }
-        />
+        /> */}
         <Route path="/signup" element={<SignUp />} />
         <Route path="*" element={<NotFound />} /> {/* Catch-all for 404 */}
       </Routes>

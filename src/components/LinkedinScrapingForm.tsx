@@ -1,13 +1,13 @@
-import  { useEffect, useState } from 'react';
-import {  useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import  {  useState } from 'react';
+// import {  useSelector } from 'react-redux';
+// import { useNavigate } from 'react-router-dom';
 // import { setAuth } from './reduxStore/authSlice';
 import useApi from '../services/useApi';
 // import apiService from './Services/apiService';
 
 const LinkedinScrapingForm = () => {
-    const isAuthenticated = useSelector((state: any) => state.auth.isAuthenticated);
-    const navigate = useNavigate();
+    // const isAuthenticated = useSelector((state: any) => state.auth.isAuthenticated);
+    // const navigate = useNavigate();
     // const dispatch = useDispatch();
     const {  loading, error, callApi } = useApi();
     
@@ -15,11 +15,11 @@ const LinkedinScrapingForm = () => {
     const [profileUrls, setProfileUrls] = useState<string[]>(['']);
     const [errors, setErrors] = useState<string[]>(['']);
 
-    useEffect(() => {
-        if (!isAuthenticated) {
-            navigate('/login');
-        }
-    }, [isAuthenticated, navigate]);
+    // useEffect(() => {
+    //     if (!isAuthenticated) {
+    //         navigate('/login');
+    //     }
+    // }, [isAuthenticated, navigate]);
 
     // Validate form inputs
     const validateForm = () => {
