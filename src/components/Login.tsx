@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
-import useApi from './Services/useApi';
-import apiService from './Services/apiService';
+import useApi from '../services/useApi';
+// import useApi from '../Services/useApi';
+import apiService from '../services/apiService';
 import { useDispatch, useSelector } from 'react-redux';
-import { setAuth } from './reduxStore/authSlice';
+import { setAuth } from '../reduxStore/authSlice';
 import { Link, useNavigate } from 'react-router-dom';
 const Login = () => {
 

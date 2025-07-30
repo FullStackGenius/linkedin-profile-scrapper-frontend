@@ -12,7 +12,7 @@ const apiService = {
   }),
 
   // Set JWT token in headers
-  setAuthToken(token) {
+  setAuthToken(token:string) {
     if (token) {
       this.instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       localStorage.setItem('token', token); // Store token in localStorage
@@ -31,17 +31,17 @@ const apiService = {
   },
 
   // POST request (e.g., for login)
-  async post(endpoint, data, customHeaders = {}) {
+  async post(endpoint:string, data:any, customHeaders = {}) {
     try {
       const response = await this.instance.post(endpoint, data, {
         headers: customHeaders,
       });
       return response.data;
-    } catch (error) {
+    } catch (error:any) {
       console.log(error);
       const status = error.response?.status;
     const responseMessage = error.response?.data?.message || error.response?.data?.error;
-    const validationErrors = [];
+    // const validationErrors = [];
     let message = responseMessage || 'An error occurred. Please try again.';
 
     if (status) {
@@ -79,13 +79,13 @@ const apiService = {
   },
 
   // GET request (example for authenticated requests)
-  async get(endpoint, customHeaders = {}) {
+  async get(endpoint:string, customHeaders = {}) {
     try {
       const response = await this.instance.get(endpoint, {
         headers: customHeaders,
       });
       return response.data;
-    } catch (error) {
+    } catch (error:any) {
       throw new Error(
         error.response?.data?.error || error.message || 'An error occurred. Please try again.'
       );

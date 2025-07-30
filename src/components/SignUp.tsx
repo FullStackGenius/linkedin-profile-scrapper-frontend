@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setAuth } from './reduxStore/authSlice';
-import useApi from './Services/useApi';
-import apiService from './Services/apiService';
+import { setAuth } from '../reduxStore/authSlice';
+import useApi from '../services/useApi';
+import apiService from '../services/apiService';
 
 const SignUp = () => {
 
@@ -18,7 +18,7 @@ useEffect(() => {
     const [name, setName] = useState('');
       const [email, setEmail] = useState('');
       const [password, setPassword] = useState('');
-      const { data, loading, error, callApi } = useApi();
+      const {  error, callApi } = useApi();
     const dispatch = useDispatch();
   
       const handleSubmit = async (e: any) => {

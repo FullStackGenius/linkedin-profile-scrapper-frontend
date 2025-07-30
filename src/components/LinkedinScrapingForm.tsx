@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import  { useEffect, useState } from 'react';
+import {  useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setAuth } from './reduxStore/authSlice';
-import useApi from './Services/useApi';
-import apiService from './Services/apiService';
+// import { setAuth } from './reduxStore/authSlice';
+import useApi from '../services/useApi';
+// import apiService from './Services/apiService';
 
 const LinkedinScrapingForm = () => {
     const isAuthenticated = useSelector((state: any) => state.auth.isAuthenticated);
     const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const { data, loading, error, callApi } = useApi();
+    // const dispatch = useDispatch();
+    const {  loading, error, callApi } = useApi();
     
     // State for multiple LinkedIn profile URLs
     const [profileUrls, setProfileUrls] = useState<string[]>(['']);
@@ -148,6 +148,7 @@ const LinkedinScrapingForm = () => {
                         {loading ? 'Scraping...' : 'Scrap Now'}
                     </button>
                 </form>
+                 {error && <p className="text-red-500">{error}</p>}
             </div>
         </div>
     );
