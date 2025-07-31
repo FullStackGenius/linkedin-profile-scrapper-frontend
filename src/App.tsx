@@ -9,6 +9,7 @@ import Dashboard from './components/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 import { useSelector } from 'react-redux';
 import About from './components/About';
+import GetAllLinkedinProfile from './components/GetAllLinkedinProfile';
 function App() {
 
 //const isAuthenticated = false; // Replace with your auth logic
@@ -26,6 +27,14 @@ const isAuthenticated = useSelector((state:any) => state.auth.isAuthenticated);
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+         <Route
+          path="/get-linkedin-profile"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <GetAllLinkedinProfile />
             </ProtectedRoute>
           }
         />
