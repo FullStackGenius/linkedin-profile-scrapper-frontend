@@ -32,7 +32,7 @@ const GetAllLinkedinProfile = () => {
             try {
                
                 const response = await callApi('get', '/getAllLinkedinProfiles');
-                console.log(response.data.profiles);
+                // console.log(response.data.profiles);
                  setProfiles(response.data.profiles);
                
             } catch (err) {
@@ -52,6 +52,9 @@ const GetAllLinkedinProfile = () => {
               <th className="px-4 py-2">Avatar</th>
               <th className="px-4 py-2">Name</th>
               <th className="px-4 py-2">Position</th>
+               <th className="px-4 py-2">Connections</th>
+                <th className="px-4 py-2">Followers</th>
+                <th className="px-4 py-2">Influence Score</th>
               <th className="px-4 py-2">Location</th>
               <th className="px-4 py-2">Company</th>
               <th className="px-4 py-2">Profile</th>
@@ -70,6 +73,14 @@ const GetAllLinkedinProfile = () => {
                 </td>
                 <td className="px-4 py-2 font-medium">{profile.name}</td>
                 <td className="px-4 py-2">{profile.position || '--'}</td>
+                <td className="px-4 py-2">{profile.connections || '--'}</td>
+                <td className="px-4 py-2">{profile.followers || '--'}</td>
+                <td className="px-4 py-2">
+                {Math.round(
+                    (Number(profile.followers || 0) * 0.6) +
+                    (Number(profile.connections || 0) * 0.4)
+                )}
+                </td>
                 <td className="px-4 py-2">{profile.location}</td>
                 <td className="px-4 py-2">{profile.current_company_name || '--'}</td>
                 <td className="px-4 py-2">
