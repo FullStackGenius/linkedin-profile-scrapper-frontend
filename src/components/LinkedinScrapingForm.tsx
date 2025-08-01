@@ -9,7 +9,7 @@ const LinkedinScrapingForm = () => {
     const isAuthenticated = useSelector((state: any) => state.auth.isAuthenticated);
     const navigate = useNavigate();
     // const dispatch = useDispatch();
-    const {  loading, error, callApi } = useApi();
+    const { data, loading, error, callApi } = useApi();
     
     // State for multiple LinkedIn profile URLs
     const [profileUrls, setProfileUrls] = useState<string[]>(['']);
@@ -148,6 +148,7 @@ const LinkedinScrapingForm = () => {
                         {loading ? 'Scraping...' : 'Scrap Now'}
                     </button>
                 </form>
+                 {data && data.message && <p className="text-green-500">{data.message}</p>}
                  {error && <p className="text-red-500">{error}</p>}
             </div>
         </div>

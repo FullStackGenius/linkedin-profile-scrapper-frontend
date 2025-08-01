@@ -18,7 +18,7 @@ const Navbar = () => {
         {/* Brand/Logo */}
         <div className="text-white text-2xl font-bold">
           <NavLink to="/" className="hover:text-gray-300">
-            LinkedIn Data
+            LinkedIn Data Scrapper
           </NavLink>
         </div>
 
