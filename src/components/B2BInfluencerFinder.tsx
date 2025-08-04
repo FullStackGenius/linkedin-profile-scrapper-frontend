@@ -70,6 +70,7 @@ if (formData.language.length > 0) {
               type="text"
               name="keyword"
               value={formData.keyword}
+              required
               onChange={handleChange}
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
               placeholder="Enter keyword"
@@ -81,6 +82,7 @@ if (formData.language.length > 0) {
               name="industry"
               multiple
               value={formData.industry}
+              required
               onChange={handleChange}
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 h-24"
               size={5}
@@ -92,12 +94,16 @@ if (formData.language.length > 0) {
               <option value="25">Manufacturing</option>
               <option value="55">Machinery Manufacturing</option>
             </select>
+             <p className="text-sm text-gray-500 mt-1">
+    Hold <span className="font-semibold">Ctrl</span> (or <span className="font-semibold">Cmd</span> on Mac) and click to select multiple options.
+  </p>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">Language</label>
             <select
               name="language"
               multiple
+              required
               value={formData.language}
               onChange={handleChange}
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 h-24"
@@ -110,6 +116,9 @@ if (formData.language.length > 0) {
               <option value="de">German</option>
               <option value="pt">Portuguese</option>
             </select>
+             <p className="text-sm text-gray-500 mt-1">
+    Hold <span className="font-semibold">Ctrl</span> (or <span className="font-semibold">Cmd</span> on Mac) and click to select multiple options.
+  </p>
           </div>
           <button
             type="submit"
