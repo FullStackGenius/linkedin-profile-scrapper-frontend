@@ -5,6 +5,7 @@ import apiService from '../services/apiService';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAuth } from '../reduxStore/authSlice';
 import { Link, useNavigate } from 'react-router-dom';
+import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
 const Login = () => {
 
 const [email, setEmail] = useState('');
@@ -40,6 +41,23 @@ useEffect(() => {
         setEmail('');
         setPassword('');
         navigate('/dashboard'); // Redirect to dashboard
+      }
+    } catch (err) {
+      // Error is handled by useApi
+    }
+  };
+
+
+    const handleGoogleLogin = async (credentialResponse:any) => {
+      console.log(credentialResponse);
+    try {
+      const response = await callApi('post', '/google-login', {
+        token: credentialResponse.credential,
+      });
+      if (response.data.token) {
+        dispatch(setAuth({ token: response.data.token, user: "userResponse" }));
+        apiService.setAuthToken(response.data.token);
+        navigate('/dashboard');
       }
     } catch (err) {
       // Error is handled by useApi
@@ -87,6 +105,17 @@ useEffect(() => {
             {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
+         <div className="mt-4 flex items-center justify-center">
+          <GoogleLogin
+            onSuccess={handleGoogleLogin}
+            onError={() => {
+              console.error('Google Login Failed');
+            }}
+            theme="filled_blue"
+            size="large"
+            width="100%"
+          />
+        </div>
         {data && data.message && <p className="success">{data.message}</p>}
         {error && <p className="text-red-500">{error}</p>}
         <p className="mt-5 text-center text-sm text-gray-600">
