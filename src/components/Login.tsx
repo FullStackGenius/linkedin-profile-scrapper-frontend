@@ -8,21 +8,21 @@ import { Link, useNavigate } from 'react-router-dom';
 import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
 const Login = () => {
 
-const [email, setEmail] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { data, loading, error, callApi } = useApi();
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const isAuthenticated = useSelector((state:any) => state.auth.isAuthenticated);
+  const isAuthenticated = useSelector((state: any) => state.auth.isAuthenticated);
 
 
-useEffect(() => {
+  useEffect(() => {
     if (isAuthenticated) {
       navigate('/dashboard'); // ✅ Safe to navigate here
     }
   }, [isAuthenticated, navigate]);
-  
+
 
 
   // Redirect if already authenticated
@@ -36,7 +36,7 @@ useEffect(() => {
       const response = await callApi('post', '/login', { email, password });
       console.log(response);
       if (response.data.token) {
-         dispatch(setAuth({ token: response.data.token, user: "userResponse" }));
+        dispatch(setAuth({ token: response.data.token, user: "userResponse" }));
         apiService.setAuthToken(response.data.token); // Store JWT token
         setEmail('');
         setPassword('');
@@ -48,8 +48,8 @@ useEffect(() => {
   };
 
 
-    const handleGoogleLogin = async (credentialResponse:any) => {
-      console.log(credentialResponse);
+  const handleGoogleLogin = async (credentialResponse: any) => {
+    console.log(credentialResponse);
     try {
       const response = await callApi('post', '/google-login', {
         token: credentialResponse.credential,
@@ -105,7 +105,12 @@ useEffect(() => {
             {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
-         <div className="mt-4 flex items-center justify-center">
+        <div className="flex items-center my-6">
+          <div className="flex-grow h-px bg-gray-300"></div>
+          <span className="px-4 text-sm text-gray-500">OR</span>
+          <div className="flex-grow h-px bg-gray-300"></div>
+        </div>
+        <div className="mt-4 flex items-center justify-center">
           <GoogleLogin
             onSuccess={handleGoogleLogin}
             onError={() => {
