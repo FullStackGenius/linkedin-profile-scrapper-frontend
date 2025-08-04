@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { setAuth } from '../reduxStore/authSlice';
 import useApi from '../services/useApi';
 import apiService from '../services/apiService';
+import Layout from './Layout';
 
 const SignUp = () => {
 
@@ -50,6 +51,7 @@ const SignUp = () => {
 
   return (
     <>
+     <Layout>
       <div className="min-h-dvh flex items-center justify-center bg-gray-50">
         <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-md border border-gray-200">
           <h2 className="text-2xl font-bold text-gray-900 text-center mb-6">Sign Up</h2>
@@ -117,6 +119,7 @@ const SignUp = () => {
           </p>
         </div>
       </div>
+      </Layout>
     </>
   )
 }

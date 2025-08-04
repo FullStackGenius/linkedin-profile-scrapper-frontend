@@ -3,6 +3,7 @@ import {  useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 // import { setAuth } from './reduxStore/authSlice';
 import useApi from '../services/useApi';
+import Layout from './Layout';
 // import apiService from './Services/apiService';
 
 const GetAllLinkedinProfile = () => {
@@ -42,6 +43,7 @@ const GetAllLinkedinProfile = () => {
     };
 
     return (
+        <Layout>
         <div className="p-6">
       <h2 className="text-2xl font-semibold mb-4">LinkedIn Profiles</h2>
       <div className="overflow-x-auto">
@@ -106,6 +108,7 @@ const GetAllLinkedinProfile = () => {
         </table>
       </div>
     </div>
+    </Layout>
     );
 };
 

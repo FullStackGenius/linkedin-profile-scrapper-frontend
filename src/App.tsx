@@ -3,7 +3,7 @@ import Home from './components/Home';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 import NotFound from './components/NotFound';
-import Navbar from './components/Navbar';
+
 import Dashboard from './components/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 import { useSelector } from 'react-redux';
@@ -17,7 +17,6 @@ const isAuthenticated = useSelector((state:any) => state.auth.isAuthenticated);
   return (
     <>
       <div>
-      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />

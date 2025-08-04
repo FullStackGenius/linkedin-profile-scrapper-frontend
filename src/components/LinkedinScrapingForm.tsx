@@ -3,6 +3,7 @@ import {  useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 // import { setAuth } from './reduxStore/authSlice';
 import useApi from '../services/useApi';
+
 // import apiService from './Services/apiService';
 
 const LinkedinScrapingForm = () => {
@@ -96,6 +97,7 @@ const LinkedinScrapingForm = () => {
     };
 
     return (
+        
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
             <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
                 <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">LinkedIn Data Collection Form</h2>
@@ -152,6 +154,7 @@ const LinkedinScrapingForm = () => {
                  {error && <p className="text-red-500">{error}</p>}
             </div>
         </div>
+        
     );
 };
 

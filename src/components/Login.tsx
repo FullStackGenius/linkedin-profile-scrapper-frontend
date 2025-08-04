@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setAuth } from '../reduxStore/authSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
+import Layout from './Layout';
 const Login = () => {
 
   const [email, setEmail] = useState('');
@@ -65,6 +66,7 @@ const Login = () => {
   };
 
   return (
+     <Layout>
     <div className="min-h-dvh flex items-center justify-center bg-gray-50">
       <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-md border border-gray-200">
         <h2 className="text-2xl font-bold text-gray-900 text-center mb-6">Login</h2>
@@ -131,6 +133,7 @@ const Login = () => {
         </p>
       </div>
     </div>
+     </Layout>
   )
 }
 
