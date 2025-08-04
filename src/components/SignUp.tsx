@@ -29,7 +29,7 @@ const SignUp = () => {
     }
     try {
       const response = await callApi('post', '/register', { name, email, password });
-      console.log(response);
+      // console.log(response);
       if (response.data.token) {
         dispatch(setAuth({ token: response.data.token, user: "userResponse" }));
         apiService.setAuthToken(response.data.token); // Store JWT token

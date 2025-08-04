@@ -57,6 +57,15 @@ const Navbar = () => {
               </NavLink>
 
                <NavLink
+                to="/b2b-influencer-finder"
+                className={({ isActive }) =>
+                  `text-white hover:text-gray-300 px-3 py-2 rounded-md text-sm font-medium ${isActive ? 'bg-gray-900' : ''
+                  }`
+                }
+              >
+                B2B Influencer Finder
+              </NavLink>
+               <NavLink
                 to="/get-linkedin-profile"
                 className={({ isActive }) =>
                   `text-white hover:text-gray-300 px-3 py-2 rounded-md text-sm font-medium ${isActive ? 'bg-gray-900' : ''

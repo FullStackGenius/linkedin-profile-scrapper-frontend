@@ -35,7 +35,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await callApi('post', '/login', { email, password });
-      console.log(response);
+      // console.log(response);
       if (response.data.token) {
         dispatch(setAuth({ token: response.data.token, user: "userResponse" }));
         apiService.setAuthToken(response.data.token); // Store JWT token
@@ -50,7 +50,7 @@ const Login = () => {
 
 
   const handleGoogleLogin = async (credentialResponse: any) => {
-    console.log(credentialResponse);
+    // console.log(credentialResponse);
     try {
       const response = await callApi('post', '/google-login', {
         token: credentialResponse.credential,
@@ -116,7 +116,7 @@ const Login = () => {
           <GoogleLogin
             onSuccess={handleGoogleLogin}
             onError={() => {
-              console.error('Google Login Failed');
+              // console.error('Google Login Failed');
             }}
             theme="filled_blue"
             size="large"

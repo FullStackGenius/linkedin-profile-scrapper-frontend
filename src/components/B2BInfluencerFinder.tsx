@@ -52,7 +52,7 @@ if (formData.language.length > 0) {
     }
 
     const dynamicUrl = `${baseUrl}?${params.toString()}`;
-    console.log('Redirecting to:', dynamicUrl);
+    // console.log('Redirecting to:', dynamicUrl);
     window.open(dynamicUrl, '_blank', 'noopener,noreferrer');
     //window.location.href = dynamicUrl; // Redirect to the constructed URL
   };
