@@ -5,7 +5,7 @@ import apiService from '../services/apiService';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAuth } from '../reduxStore/authSlice';
 import { Link, useNavigate } from 'react-router-dom';
-import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
+import { GoogleLogin } from '@react-oauth/google';
 import Layout from './Layout';
 const Login = () => {
 

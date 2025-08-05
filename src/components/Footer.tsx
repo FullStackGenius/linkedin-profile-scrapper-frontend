@@ -1,8 +1,8 @@
-import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom'
+// import { useSelector } from 'react-redux';
+// import { NavLink } from 'react-router-dom'
 
 const Footer = () => {
-    const isAuthenticated = useSelector((state:any) => state.auth.isAuthenticated);
+    // const isAuthenticated = useSelector((state:any) => state.auth.isAuthenticated);
   return (
     <>
     <section className="bg-gray-800 text-white py-16">

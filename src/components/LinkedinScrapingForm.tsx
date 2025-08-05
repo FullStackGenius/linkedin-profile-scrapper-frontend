@@ -82,7 +82,7 @@ const LinkedinScrapingForm = () => {
                 const formattedUrls = profileUrls.map((url) => ({ url }));
                 //  console.log(formattedUrls);
                //  return false;
-                const response = await callApi('post', '/scrapeBrightdata', { profileUrl : formattedUrls});
+                await callApi('post', '/scrapeBrightdata', { profileUrl : formattedUrls});
                 // console.log(response);
                 // Uncomment if you need to handle token and redirect
                 // if (response.data.token) {
