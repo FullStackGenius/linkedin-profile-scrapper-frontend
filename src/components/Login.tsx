@@ -41,7 +41,7 @@ const Login = () => {
         apiService.setAuthToken(response.data.token); // Store JWT token
         setEmail('');
         setPassword('');
-        navigate('/dashboard'); // Redirect to dashboard
+        navigate('/influencer-finder'); // Redirect to dashboard
       }
     } catch (err) {
       // Error is handled by useApi
@@ -58,7 +58,7 @@ const Login = () => {
       if (response.data.token) {
         dispatch(setAuth({ token: response.data.token, user: "userResponse" }));
         apiService.setAuthToken(response.data.token);
-        navigate('/dashboard');
+        navigate('/influencer-finder');
       }
     } catch (err) {
       // Error is handled by useApi
