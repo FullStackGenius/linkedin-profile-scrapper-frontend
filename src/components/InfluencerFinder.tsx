@@ -20,7 +20,7 @@ const InfluencerFinder: React.FC = () => {
         industry: [],
         language: [],
     });
-    const [results, setResults] = React.useState([]);
+    const [results, setResults] = useState([]);
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value, options } = e.target as HTMLSelectElement;
         if (name === 'industry' || name === 'language') {
@@ -92,7 +92,7 @@ const InfluencerFinder: React.FC = () => {
 
     return (
         <Layout>
-            <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        {results.length < 1 &&    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
                 <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
                     <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">Influencer Finder</h2>
                     <p className="text-gray-600 text-center mb-6">Find relevant LinkedIn profiles based on search criteria.</p>
@@ -172,9 +172,34 @@ const InfluencerFinder: React.FC = () => {
                         <button
                             disabled={loading}
                             type="submit"
-                            className="w-full bg-indigo-600 text-white p-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            className="w-full flex justify-center bg-indigo-600 text-white p-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
-                            {loading ? 'Searching ...' : 'Search'}
+                            
+                           {loading ? 'Scraping.. ' : 'Scrap now'} 
+                            {loading && (
+                  <svg
+                    className="animate-spin h-5 w-5 mr-3 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                )}
+               
+                            
 
                         </button>
                     </form>
@@ -233,12 +258,21 @@ const InfluencerFinder: React.FC = () => {
 
 
                 </div>
-            </div>
-            <div className="min-h-screen bg-gradient-to-b from-blue-100 to-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+            </div> }
+        {results.length > 0 &&   <div className="min-h-screen bg-gradient-to-b from-blue-100 to-gray-50 py-12 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-7xl mx-auto">
                     <h1 className="text-4xl font-extrabold text-gray-900 text-center mb-12">
                         LinkedIn Search Results
                     </h1>
+                    <button
+  onClick={() => {
+    setResults([]);          // Clear the results array
+    // window.history.back();   // Navigate back
+  }}
+  className="inline-flex items-center px-4 py-2 mb-6 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition"
+>
+  ← Back To Influencer Finder
+</button>
                     {results.length > 0 ? (
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             {results.map((profile:any, index) => (
@@ -298,7 +332,7 @@ const InfluencerFinder: React.FC = () => {
                         <p className="text-center text-gray-600 text-lg">No results found.</p>
                     )}
                 </div>
-            </div>
+            </div>  }
         </Layout>
     );
 };
