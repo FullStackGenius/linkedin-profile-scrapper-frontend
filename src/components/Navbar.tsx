@@ -46,7 +46,7 @@ const Navbar = () => {
 
           {isAuthenticated ? (
             <>
-              <NavLink
+              {/* <NavLink
                 to="/dashboard"
                 className={({ isActive }) =>
                   `text-white hover:text-gray-300 px-3 py-2 rounded-md text-sm font-medium ${isActive ? 'bg-gray-900' : ''
@@ -54,7 +54,7 @@ const Navbar = () => {
                 }
               >
                 Dashboard
-              </NavLink>
+              </NavLink> */}
 
                {/* <NavLink
                 to="/b2b-influencer-finder"

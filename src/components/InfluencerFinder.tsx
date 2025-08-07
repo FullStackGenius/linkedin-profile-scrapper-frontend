@@ -97,19 +97,7 @@ const InfluencerFinder: React.FC = () => {
                     <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">Influencer Finder</h2>
                     <p className="text-gray-600 text-center mb-6">Find relevant LinkedIn profiles based on search criteria.</p>
                     <form onSubmit={handleSearch} className="space-y-4">
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700">LinkedIn Cookie</label>
-                            <input
-                                type="text"
-                                name="linkedinCookie"
-                                readOnly
-                                value={formData.linkedinCookie}
-                                required
-                                onChange={handleChange}
-                                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                                placeholder="Enter your LinkedIn cookie"
-                            />
-                        </div>
+                       
 
                         <div>
                             <label className="block text-sm font-medium text-gray-700">Keyword to Search</label>
@@ -166,6 +154,19 @@ const InfluencerFinder: React.FC = () => {
                             <p className="text-sm text-gray-500 mt-1">
                                 Hold <span className="font-semibold">Ctrl</span> (or <span className="font-semibold">Cmd</span> on Mac) and click to select multiple options.
                             </p>
+                        </div>
+                         <div>
+                            <label className="block text-sm font-medium text-gray-700">LinkedIn Cookie</label>
+                            <input
+                                type="text"
+                                name="linkedinCookie"
+                                readOnly
+                                value={formData.linkedinCookie}
+                                required
+                                onChange={handleChange}
+                                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                                placeholder="Enter your LinkedIn cookie"
+                            />
                         </div>
                         {data && data.message && <p className="success">{data.message}</p>}
                         {error && <p className="text-red-500">{error}</p>}
