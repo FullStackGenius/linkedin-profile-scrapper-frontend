@@ -45,7 +45,8 @@ const isAuthenticated = useSelector((state:any) => state.auth.isAuthenticated);
           path="/influencer-finder"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <InfluencerFinder />
+               <SelectBox />
+              {/* <InfluencerFinder /> */}
             </ProtectedRoute>
           }
         />
