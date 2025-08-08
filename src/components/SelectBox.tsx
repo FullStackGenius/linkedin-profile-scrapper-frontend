@@ -91,7 +91,7 @@ const InfluencerFinder: React.FC = () => {
     const { data, error: apiError, loading, callApi } = useApi();
     const [formData, setFormData] = useState<FormData>({
         keyword: '',
-        linkedinCookie: '',
+        linkedinCookie: 'AQEDASg3OocBn8F9AAABly-R_ckAAAGYpvlHRk0Ax8SRkC6NJfR92gVHpCjMP0ppObnILXFqDJKOepHZn9tcJXZ_0hAcyipWbRcWaG4W32CugBbz_I6SzClQXufxShU2kBky57LP6bLuBx0Jdr37gfWI',
         industry: [],
         language: [],
     });
@@ -245,6 +245,7 @@ const InfluencerFinder: React.FC = () => {
                                     type="text"
                                     name="linkedinCookie"
                                     value={formData.linkedinCookie}
+                                    readOnly
                                     onChange={handleInputChange}
                                     className={`mt-1 block w-full p-2 border rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 ${errors.linkedinCookie ? 'border-red-500' : 'border-gray-300'
                                         }`}
