@@ -17,10 +17,10 @@ const Home = () => {
             Analyze and manage your LinkedIn connections with ease. Gain insights, track engagement, and grow your network efficiently.
           </p>
           <NavLink
-            to={isAuthenticated ? '/dashboard' : '/login'}
+            to={isAuthenticated ? '/influencer-finder' : '/login'}
             className="inline-block bg-white text-blue-600 font-semibold px-6 py-3 rounded-md hover:bg-gray-200 transition"
           >
-            {isAuthenticated ? 'Go to Dashboard' : 'Get Started'}
+            {isAuthenticated ? 'Go to Influencer finder' : 'Get Started'}
           </NavLink>
         </div>
       </section>
