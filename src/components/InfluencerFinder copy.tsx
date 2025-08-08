@@ -3,6 +3,7 @@ import type { FormEvent } from 'react';
 import useApi from '../services/useApi';
 import Layout from './Layout';
 
+
 interface FormData {
     keyword: string;
     linkedinCookie: string;
@@ -11,6 +12,7 @@ interface FormData {
 }
 
 const InfluencerFinder: React.FC = () => {
+    //  data, loading, error,
     const { data, error, loading, callApi } = useApi();
     const [formData, setFormData] = useState<FormData>({
         keyword: '',
@@ -19,9 +21,6 @@ const InfluencerFinder: React.FC = () => {
         language: [],
     });
     const [results, setResults] = useState([]);
-    const [page, setPage] = useState(1); // Add page state
-    const maxPages = 10; // Maximum page limit
-
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value, options } = e.target as HTMLSelectElement;
         if (name === 'industry' || name === 'language') {
@@ -34,71 +33,85 @@ const InfluencerFinder: React.FC = () => {
         }
     };
 
-    const constructUrl = (pageNum: number) => {
+    const handleSearch = async (e: FormEvent) => {
+        e.preventDefault();
+
+
+
+
+
+
+        // Construct dynamic URL with query parameters
         const baseUrl = 'https://www.linkedin.com/search/results/people/';
         const params = new URLSearchParams();
         if (formData.industry.length > 0) {
             params.append('industry', JSON.stringify(formData.industry));
         }
+
         if (formData.language.length > 0) {
             params.append('profileLanguage', JSON.stringify(formData.language));
         }
+
+        // if (formData.industry.length > 0) {
+        //   params.append('industry', `[${formData.industry.join(',')}]`);
+        // }
+        // if (formData.language.length > 0) {
+        //   params.append('profileLanguage', `[${formData.language.join(',')}]`);
+        // }
         if (formData.keyword.trim()) {
             params.append('keywords', formData.keyword.trim());
         }
-        params.append('page', pageNum.toString()); // Add page parameter
-        return `${baseUrl}?${params.toString()}`;
-    };
 
-    const handleSearch = async (e: FormEvent, pageNum: number = 1) => {
-        e.preventDefault();
-        const dynamicUrl = constructUrl(pageNum);
+        const dynamicUrl = `${baseUrl}?${params.toString()}`;
+        // console.log('Redirecting to:', dynamicUrl);
+        //console.log(formData.linkedinCookie.trim());
+        //return;
 
         try {
+            //    let sessionCookie = 'AQEDASg3OocBn8F9AAABly-R_ckAAAGYpvlHRk0Ax8SRkC6NJfR92gVHpCjMP0ppObnILXFqDJKOepHZn9tcJXZ_0hAcyipWbRcWaG4W32CugBbz_I6SzClQXufxShU2kBky57LP6bLuBx0Jdr37gfWI';
             const response = await callApi('post', '/phantombuster-scraping', {
-                linkedInSearchUrl: dynamicUrl,
-                sessionCookie: formData.linkedinCookie.trim(),
+                linkedInSearchUrl: dynamicUrl, sessionCookie:
+                    formData.linkedinCookie.trim()
             });
+            // console.log(response);
             if (response.status) {
-                // Append new results instead of replacing them
-                setResults((prev) => (pageNum === 1 ? response.data : [...prev, ...response.data]));
+                setResults(response.data);
                 console.log(response);
+
+                //navigate('/dashboard'); // Redirect to dashboard
             }
         } catch (err) {
-            console.log(err);
+            console.log(err)
+            // Error is handled by useApi
         }
-    };
 
-    const handleLoadMore = () => {
-        if (page < maxPages) {
-            const nextPage = page + 1;
-            setPage(nextPage);
-            handleSearch({ preventDefault: () => {} } as FormEvent, nextPage);
-        }
+
+        // window.open(dynamicUrl, '_blank', 'noopener,noreferrer');
+        //window.location.href = dynamicUrl; // Redirect to the constructed URL
     };
 
     return (
         <Layout>
-            {results.length < 1 && (
-                <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-                    <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-                        <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">Influencer Finder</h2>
-                        <p className="text-gray-600 text-center mb-6">Find relevant LinkedIn profiles based on search criteria.</p>
-                        <form onSubmit={(e) => handleSearch(e, 1)} className="space-y-4">
-                            {/* ... Form inputs remain the same ... */}
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700">Keyword to Search</label>
-                                <input
-                                    type="text"
-                                    name="keyword"
-                                    value={formData.keyword}
-                                    required
-                                    onChange={handleChange}
-                                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                                    placeholder="Enter keyword"
-                                />
-                            </div>
-                            <div>
+        {results.length < 1 &&    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+                <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+                    <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">Influencer Finder</h2>
+                    <p className="text-gray-600 text-center mb-6">Find relevant LinkedIn profiles based on search criteria.</p>
+                    <form onSubmit={handleSearch} className="space-y-4">
+                       
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700">Keyword to Search</label>
+                            <input
+                                type="text"
+                                name="keyword"
+                                value={formData.keyword}
+                                required
+                                onChange={handleChange}
+                                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                                placeholder="Enter keyword"
+                            />
+                        </div>
+                        <div>
                             <label className="block text-sm font-medium text-gray-700">Industry</label>
                             <select
                                 name="industry"
@@ -155,63 +168,119 @@ const InfluencerFinder: React.FC = () => {
                                 placeholder="Enter your LinkedIn cookie"
                             />
                         </div>
-                         {data && data.message && <p className="success">{data.message}</p>}
+                        {data && data.message && <p className="success">{data.message}</p>}
                         {error && <p className="text-red-500">{error}</p>}
-                            <button
-                                disabled={loading}
-                                type="submit"
-                                className="w-full flex justify-center bg-indigo-600 text-white p-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            >
-                                {loading ? 'Scraping...' : 'Scrap now'}
-                                {loading && (
-                                    <svg
-                                        className="animate-spin h-5 w-5 mr-3 text-white"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <circle
-                                            className="opacity-25"
-                                            cx="12"
-                                            cy="12"
-                                            r="10"
-                                            stroke="currentColor"
-                                            strokeWidth="4"
-                                        ></circle>
-                                        <path
-                                            className="opacity-75"
-                                            fill="currentColor"
-                                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                        ></path>
-                                    </svg>
-                                )}
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            )}
-            {results.length > 0 && (
-                <div className="min-h-screen bg-gradient-to-b from-blue-100 to-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-                    <div className="max-w-7xl mx-auto">
-                        <h1 className="text-4xl font-extrabold text-gray-900 text-center mb-12">
-                            LinkedIn Search Results
-                        </h1>
                         <button
-                            onClick={() => {
-                                setResults([]);
-                                setPage(1); // Reset page when going back
-                            }}
-                            className="inline-flex items-center px-4 py-2 mb-6 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition"
+                            disabled={loading}
+                            type="submit"
+                            className="w-full flex justify-center bg-indigo-600 text-white p-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
-                            ← Back To Influencer Finder
+                            
+                           {loading ? 'Scraping.. ' : 'Scrap now'} 
+                            {loading && (
+                  <svg
+                    className="animate-spin h-5 w-5 mr-3 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                )}
+               
+                            
+
                         </button>
+                    </form>
+
+
+
+                    {/* {results.length > 0 && (
+              <div className="mt-6">
+                <h2 className="text-xl font-semibold mb-4">Results</h2>
+                <div className="grid gap-4">
+                  {results.map((profile, index) => (
+                    <div
+                      key={index}
+                      className="bg-white border border-gray-200 rounded-lg shadow-sm p-4 flex items-start space-x-4"
+                    >
+                      {profile.profileImageUrl && (
+                        <img
+                          src={profile.profileImageUrl}
+                          alt={`${profile.fullName}'s profile`}
+                          className="w-16 h-16 rounded-full object-cover"
+                        />
+                      )}
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-800">
+                          <a
+                            href={profile.profileUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="hover:underline"
+                          >
+                            {profile.fullName}
+                          </a>
+                        </h3>
+                        <p className="text-sm text-gray-600">{profile.headline}</p>
+                        <p className="text-sm text-gray-500">
+                          {profile.jobTitle} at{' '}
+                          <a
+                            href={profile.companyUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="hover:underline"
+                          >
+                            {profile.company}
+                          </a>
+                        </p>
+                        <p className="text-sm text-gray-500">{profile.location}</p>
+                        {profile.sharedConnections && (
+                          <p className="text-sm text-gray-500">{profile.sharedConnections}</p>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )} */}
+
+
+                </div>
+            </div> }
+        {results.length > 0 &&   <div className="min-h-screen bg-gradient-to-b from-blue-100 to-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+                <div className="max-w-7xl mx-auto">
+                    <h1 className="text-4xl font-extrabold text-gray-900 text-center mb-12">
+                        LinkedIn Search Results
+                    </h1>
+                    <button
+  onClick={() => {
+    setResults([]);          // Clear the results array
+    // window.history.back();   // Navigate back
+  }}
+  className="inline-flex items-center px-4 py-2 mb-6 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition"
+>
+  ← Back To Influencer Finder
+</button>
+                    {results.length > 0 ? (
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {results.map((profile: any, index) => (
+                            {results.map((profile:any, index) => (
                                 <div
                                     key={index}
                                     className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 border border-gray-100"
                                 >
-                                    {/* ... Profile card content remains the same ... */}
                                     <div className="flex items-start space-x-4">
                                         {profile.profileImageUrl && (
                                             <img
@@ -260,42 +329,11 @@ const InfluencerFinder: React.FC = () => {
                                 </div>
                             ))}
                         </div>
-                        {page < maxPages && results.length > 0 && (
-                            <div className="mt-8 text-center">
-                                <button
-                                    onClick={handleLoadMore}
-                                    disabled={loading}
-                                    className="inline-flex items-center px-6 py-3 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200"
-                                >
-                                    {loading ? 'Loading...' : 'Load More'}
-                                    {loading && (
-                                        <svg
-                                            className="animate-spin h-5 w-5 ml-3 text-white"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <circle
-                                                className="opacity-25"
-                                                cx="12"
-                                                cy="12"
-                                                r="10"
-                                                stroke="currentColor"
-                                                strokeWidth="4"
-                                            ></circle>
-                                            <path
-                                                className="opacity-75"
-                                                fill="currentColor"
-                                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                            ></path>
-                                        </svg>
-                                    )}
-                                </button>
-                            </div>
-                        )}
-                    </div>
+                    ) : (
+                        <p className="text-center text-gray-600 text-lg">No results found.</p>
+                    )}
                 </div>
-            )}
+            </div>  }
         </Layout>
     );
 };
