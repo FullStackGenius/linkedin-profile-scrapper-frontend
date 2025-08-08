@@ -12,6 +12,7 @@ import GetAllLinkedinProfile from './components/GetAllLinkedinProfile';
 import B2BInfluencerFinder from './components/B2BInfluencerFinder';
 import InfluencerFinder from './components/InfluencerFinder';
 import LinkedinProfile from './components/LinkedinProfile';
+import SelectBox from './components/SelectBox';
 function App() {
 
 //const isAuthenticated = false; // Replace with your auth logic
@@ -53,6 +54,16 @@ const isAuthenticated = useSelector((state:any) => state.auth.isAuthenticated);
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
               <GetAllLinkedinProfile />
+            </ProtectedRoute>
+          }
+        />
+
+
+         <Route
+          path="/select-box"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <SelectBox />
             </ProtectedRoute>
           }
         />
