@@ -58,12 +58,49 @@ const LinkedinProfile: React.FC = () => {
   };
 
   const handlePageChange = (page: number) => {
-    if (page > 0 && page <= Math.ceil(total / limit)) {
+    const totalPages = Math.ceil(total / limit);
+    if (page > 0 && page <= totalPages) {
       setCurrentPage(page);
     }
   };
 
   const totalPages = Math.ceil(total / limit);
+  const maxPagesToShow = 10; // Number of page links to show
+  const halfMax = Math.floor(maxPagesToShow / 2);
+
+  const getPageNumbers = () => {
+    const pageNumbers = [];
+    let startPage = Math.max(1, currentPage - halfMax);
+    let endPage = Math.min(totalPages, currentPage + halfMax);
+
+    if (endPage - startPage < maxPagesToShow - 1) {
+      if (startPage === 1) {
+        endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+      } else if (endPage === totalPages) {
+        startPage = Math.max(1, endPage - maxPagesToShow + 1);
+      }
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pageNumbers.push(i);
+    }
+
+    if (startPage > 2) {
+      pageNumbers.unshift('...');
+      pageNumbers.unshift(1);
+    } else if (startPage === 2) {
+      pageNumbers.unshift(1);
+    }
+
+    if (endPage < totalPages - 1) {
+      pageNumbers.push('...');
+      pageNumbers.push(totalPages);
+    } else if (endPage === totalPages - 1) {
+      pageNumbers.push(totalPages);
+    }
+
+    return pageNumbers;
+  };
 
   return (
     <Layout>
@@ -73,7 +110,7 @@ const LinkedinProfile: React.FC = () => {
           {profiles.length > 0 ? (
             <div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {profiles.map((profile, index) => (
+                {profiles.map((profile) => (
                   <div
                     key={profile.id}
                     className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 border border-gray-100"
@@ -91,7 +128,7 @@ const LinkedinProfile: React.FC = () => {
                           <h3 className="text-lg font-semibold text-gray-800">
                             {profile.full_name || '--'}
                           </h3>
-                          <span className="text-sm text-gray-500 font-medium">#{index + 1}</span>
+                          {/* <span className="text-sm text-gray-500 font-medium">#{index + 1}</span> */}
                         </div>
                         <p className="text-sm text-gray-600 mt-1 line-clamp-2">{profile.headline || '--'}</p>
                         <p className="text-sm text-gray-500 mt-2">
@@ -123,25 +160,26 @@ const LinkedinProfile: React.FC = () => {
                   </div>
                 ))}
               </div>
-              {/* Pagination */}
-              <div className="mt-8 flex justify-center items-center space-x-4">
-                <button
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  disabled={currentPage === 1}
-                  className="px-4 py-2 bg-indigo-600 text-white rounded-lg disabled:bg-gray-400 disabled:cursor-not-allowed hover:bg-indigo-700 transition-colors duration-200"
-                >
-                  Previous
-                </button>
-                <span className="text-gray-700">
-                  Page {currentPage} of {totalPages}
-                </span>
-                <button
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  disabled={currentPage === totalPages}
-                  className="px-4 py-2 bg-indigo-600 text-white rounded-lg disabled:bg-gray-400 disabled:cursor-not-allowed hover:bg-indigo-700 transition-colors duration-200"
-                >
-                  Next
-                </button>
+              {/* Pagination with Total Count and Page Numbers */}
+              <div className="mt-8 flex flex-col items-center space-y-4">
+                <p className="text-gray-700 text-lg">
+                  Total Profiles: {total} | Pages: {totalPages}
+                </p>
+                <div className="flex justify-center items-center space-x-2">
+                  {getPageNumbers().map((page, index) => (
+                    <button
+                      key={index}
+                      onClick={() => typeof page === 'number' && handlePageChange(page)}
+                      className={`px-3 py-1 rounded-lg ${
+                        typeof page === 'number' && page === currentPage
+                          ? 'bg-indigo-600 text-white'
+                          : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                      } ${typeof page !== 'number' ? 'cursor-default' : ''}`}
+                    >
+                      {page}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           ) : (
