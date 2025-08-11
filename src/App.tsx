@@ -13,6 +13,7 @@ import B2BInfluencerFinder from './components/B2BInfluencerFinder';
 import InfluencerFinder from './components/InfluencerFinder';
 import LinkedinProfile from './components/LinkedinProfile';
 import SelectBox from './components/SelectBox';
+import Profile from './components/Profile';
 function App() {
 
 //const isAuthenticated = false; // Replace with your auth logic
@@ -64,7 +65,8 @@ const isAuthenticated = useSelector((state:any) => state.auth.isAuthenticated);
           path="/select-box"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <SelectBox />
+              {/* <SelectBox /> */}
+              <InfluencerFinder /> 
             </ProtectedRoute>
           }
         />
@@ -77,6 +79,16 @@ const isAuthenticated = useSelector((state:any) => state.auth.isAuthenticated);
             </ProtectedRoute>
           }
         />
+
+           <Route
+          path="/profile"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+
         <Route path="/signup" element={<SignUp />} />
         <Route path="*" element={<NotFound />} /> {/* Catch-all for 404 */}
       </Routes>
