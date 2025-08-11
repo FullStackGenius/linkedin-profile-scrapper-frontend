@@ -8,15 +8,14 @@ import Dashboard from './components/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 import { useSelector } from 'react-redux';
 import About from './components/About';
-import GetAllLinkedinProfile from './components/GetAllLinkedinProfile';
-import B2BInfluencerFinder from './components/B2BInfluencerFinder';
-import InfluencerFinder from './components/InfluencerFinder';
+// import GetAllLinkedinProfile from './components/GetAllLinkedinProfile';
+// import B2BInfluencerFinder from './components/B2BInfluencerFinder';
 import LinkedinProfile from './components/LinkedinProfile';
-import SelectBox from './components/SelectBox';
 import Profile from './components/Profile';
+import InfluencerFinders from './components/InfluencerFinders';
 function App() {
 
-//const isAuthenticated = false; // Replace with your auth logic
+
 const isAuthenticated = useSelector((state:any) => state.auth.isAuthenticated);
   return (
     <>
@@ -33,43 +32,34 @@ const isAuthenticated = useSelector((state:any) => state.auth.isAuthenticated);
             </ProtectedRoute>
           }
         />
-        <Route
+        {/* <Route
           path="/b2b-influencer-finder"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
               <B2BInfluencerFinder />
             </ProtectedRoute>
           }
-        />
+        /> */}
 
          <Route
           path="/influencer-finder"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
-               <SelectBox />
-              {/* <InfluencerFinder /> */}
+               <InfluencerFinders />
             </ProtectedRoute>
           }
         />
-         <Route
+         {/* <Route
           path="/get-linkedin-profile"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
               <GetAllLinkedinProfile />
             </ProtectedRoute>
           }
-        />
+        /> */}
 
 
-         <Route
-          path="/select-box"
-          element={
-            <ProtectedRoute isAuthenticated={isAuthenticated}>
-              {/* <SelectBox /> */}
-              <InfluencerFinder /> 
-            </ProtectedRoute>
-          }
-        />
+         
 
          <Route
           path="/linkedin-profile-data"
