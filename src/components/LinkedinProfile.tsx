@@ -16,6 +16,8 @@ interface Profile {
   shared_connections: string | null;
   followers: string | null;
   profile_url: string | null;
+  followers_count: number | 0;
+  connections_count: number | 0;
 }
 
 interface ApiResponse {
@@ -123,39 +125,65 @@ const LinkedinProfile: React.FC = () => {
                           className="w-16 h-16 rounded-full object-cover border-2 border-indigo-200"
                         />
                       )}
+
+
                       <div className="flex-1">
+                        {/* Name & Headline */}
                         <div className="flex items-center justify-between">
                           <h3 className="text-lg font-semibold text-gray-800">
                             {profile.full_name || '--'}
                           </h3>
-                          {/* <span className="text-sm text-gray-500 font-medium">#{index + 1}</span> */}
                         </div>
-                        <p className="text-sm text-gray-600 mt-1 line-clamp-2">{profile.headline || '--'}</p>
+
+                        <p className="text-sm text-gray-600 mt-1 line-clamp-2">
+                          {profile.headline || '--'}
+                        </p>
+
+                        {/* Job & Company */}
                         <p className="text-sm text-gray-500 mt-2">
-                          {profile.job_title || '--'} at{' '}
-                          <span className="text-indigo-500">{profile.company || '--'}</span>
+                          {profile.job_title || '--'} at{" "}
+                          <span className="text-indigo-500 font-medium">{profile.company || '--'}</span>
                         </p>
-                        <p className="text-sm text-gray-500 mt-1">{profile.location || '--'}</p>
-                        <p className="text-sm text-gray-400 mt-1">
-                          {profile.connection_degree || '--'}
-                          {profile.shared_connections && ` • ${profile.shared_connections}`}
+
+                        {/* Location */}
+                        <p className="text-sm text-gray-500 mt-1">{profile.connection_degree || '--'}  {profile.location || '--'}</p>
+
+                        {/* Followers & Connections */}
+                        <div className="flex gap-4 mt-2">
+                          <p className="text-sm text-gray-500">
+                            <span className="font-medium">Followers:</span> {profile.followers_count || '0'}
+                          </p>
+                          <p className="text-sm text-gray-500">
+                            <span className="font-medium">Connections:</span> {profile.connections_count || '0'}
+                          </p>
+                        </div>
+
+                        {/* Influence Score */}
+                        {/* {(profile.followers_count || profile.connections_count) && ( */}
+                        <p className="text-sm text-indigo-500 mt-1 font-semibold">
+
+                          Influence Score:{" "}
+                          {((profile.followers_count || 0) * 0.6 + (profile.connections_count || 0) * 0.4).toFixed(2)}
                         </p>
-                        <p className="text-sm text-gray-500 mt-1">
-                          Influence Score:{' '}
-                          {Math.round(
-                            (parseInt(profile.shared_connections?.match(/\d+/)?.[0] || '0') * 0.4) +
-                            (parseInt(profile.followers?.replace(/[^\d]/g, '') || '0') * 0.6)
-                          )}
-                        </p>
+                        {/* )} */}
+
+                        {/* Connection degree & shared connections */}
+                        {/* <p className="text-sm text-gray-400 mt-1">
+    {profile.connection_degree || '--'}
+    {profile.shared_connections && ` • ${profile.shared_connections}`}
+  </p> */}
+
+                        {/* View Profile Button */}
                         <a
                           href={profile.profile_url || '#'}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="mt-4 inline-block px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors duration-200"
+                          className="mt-4 inline-block px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg shadow hover:bg-indigo-700 transition-colors duration-200"
                         >
                           View Profile
                         </a>
                       </div>
+
                     </div>
                   </div>
                 ))}
@@ -170,11 +198,10 @@ const LinkedinProfile: React.FC = () => {
                     <button
                       key={index}
                       onClick={() => typeof page === 'number' && handlePageChange(page)}
-                      className={`px-3 py-1 rounded-lg ${
-                        typeof page === 'number' && page === currentPage
-                          ? 'bg-indigo-600 text-white'
-                          : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                      } ${typeof page !== 'number' ? 'cursor-default' : ''}`}
+                      className={`px-3 py-1 rounded-lg ${typeof page === 'number' && page === currentPage
+                        ? 'bg-indigo-600 text-white'
+                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                        } ${typeof page !== 'number' ? 'cursor-default' : ''}`}
                     >
                       {page}
                     </button>

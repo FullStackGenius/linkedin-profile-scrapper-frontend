@@ -350,6 +350,32 @@ const InfluencerFinders: React.FC = () => {
                                             {profile.sharedConnections && (
                                                 <p className="text-sm text-gray-400 mt-1">{profile.sharedConnections}</p>
                                             )}
+
+
+
+                                            <p className="text-sm text-gray-400 mt-1">
+                                                Connections {profile.connectionsCount}
+                                            </p>
+
+
+
+                                            <p className="text-sm text-gray-400 mt-1">
+                                                Followers {profile.followersCount}
+                                            </p>
+
+
+                                            {/* Influence Score */}
+
+                                            <p className="text-sm text-blue-500 mt-1 font-semibold">
+                                                Influence Score:{" "}
+                                                {(
+                                                    (profile.followersCount || 0) * 0.6 +
+                                                    (profile.connectionsCount || 0) * 0.4
+                                                )}
+                                            </p>
+
+
+
                                             <a
                                                 href={profile.profileUrl}
                                                 target="_blank"
@@ -374,20 +400,20 @@ const InfluencerFinders: React.FC = () => {
                                 >
                                     {loading ? 'Loading...' : 'Load More'}
                                     {loading ? 'Loading...' : <svg
-    xmlns="http://www.w3.org/2000/svg"
-    className="h-5 w-5 ml-3"
-    fill="currentColor"
-    viewBox="0 0 20 20"
-  >
-    <path
-      fillRule="evenodd"
-      d="M10 2a4 4 0 00-4 4v3H5a2 2 0 00-2 2v5a2 2 0 
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-5 w-5 ml-3"
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                    >
+                                        <path
+                                            fillRule="evenodd"
+                                            d="M10 2a4 4 0 00-4 4v3H5a2 2 0 00-2 2v5a2 2 0 
          002 2h10a2 2 0 002-2v-5a2 2 0 
          00-2-2h-1V6a4 4 0 00-4-4zm-2 7V6a2 2 0 
          114 0v3H8z"
-      clipRule="evenodd"
-    />
-  </svg>}
+                                            clipRule="evenodd"
+                                        />
+                                    </svg>}
                                     {loading && (
                                         <svg
                                             className="animate-spin h-5 w-5 ml-3 text-white"
@@ -410,7 +436,7 @@ const InfluencerFinders: React.FC = () => {
                                             ></path>
                                         </svg>
                                     )}
-                                    
+
                                 </button>
                             </div>
                         )}
