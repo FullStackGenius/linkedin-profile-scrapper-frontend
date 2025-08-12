@@ -163,7 +163,7 @@ const LinkedinProfile: React.FC = () => {
                         <p className="text-sm text-indigo-500 mt-1 font-semibold">
 
                           Influence Score:{" "}
-                          {((profile.followers_count || 0) * 0.6 + (profile.connections_count || 0) * 0.4).toFixed(2)}
+                          {Math.round(((profile.followers_count || 0) * 0.6 + (profile.connections_count || 0) * 0.4))}
                         </p>
                         {/* )} */}
 

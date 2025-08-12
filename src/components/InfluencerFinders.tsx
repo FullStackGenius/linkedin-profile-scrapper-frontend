@@ -368,10 +368,10 @@ const InfluencerFinders: React.FC = () => {
 
                                             <p className="text-sm text-blue-500 mt-1 font-semibold">
                                                 Influence Score:{" "}
-                                                {(
+                                                {Math.round((
                                                     (profile.followersCount || 0) * 0.6 +
                                                     (profile.connectionsCount || 0) * 0.4
-                                                )}
+                                                ))}
                                             </p>
 
 
