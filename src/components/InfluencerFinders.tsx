@@ -394,7 +394,7 @@ const InfluencerFinders: React.FC = () => {
                                 <button
                                     onClick={handleLoadMore}
                                     // disabled={loading}
-                                    disabled
+                                    // disabled
                                     className={`inline-flex items-center px-6 py-3 rounded-lg text-white text-sm font-medium ${loading ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
                                         } transition-colors duration-200`}
                                 >
