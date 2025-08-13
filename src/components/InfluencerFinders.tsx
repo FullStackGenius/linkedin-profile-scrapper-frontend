@@ -3,6 +3,11 @@ import type { FormEvent } from 'react';
 import useApi from '../services/useApi';
 import Layout from './Layout';
 
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+const MySwal = withReactContent(Swal);
+
 // SelectBox Component
 interface SelectBoxProps {
     name: string;
@@ -169,21 +174,61 @@ const InfluencerFinders: React.FC = () => {
 
     const handleSearch = async (e: FormEvent, pageNum: number = 1) => {
         e.preventDefault();
+
         if (!validateForm()) {
             return;
         }
         const dynamicUrl = constructUrl(pageNum);
+        MySwal.fire({
+            title: (
+                <div className="text-xl font-bold text-indigo-600">
+                    Processing Your Request
+                </div>
+            ),
+            html: (
+                <div className="mt-3 text-gray-700 text-base leading-relaxed">
+                    <p>Your results are being generated and may take 2–3 minutes to appear.</p>
+                    <p className="mt-2">
+                        Thanks for your patience, we’ll show them as soon as they’re ready! Keep this window open!
+                    </p>
+                    <p className="mt-2 italic text-sm text-gray-500">
+                        Let’s keep the search criteria in the back of course.
+                    </p>
+                </div>
+            ),
+            background: "#ffffff",
+            color: "#374151",
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+            showConfirmButton: false,
+            customClass: {
+                popup: "rounded-xl shadow-lg border border-gray-100 p-6",
+            },
+        });
         // return;
         try {
             const response = await callApi('post', '/phantombuster-scraping', {
                 linkedInSearchUrl: dynamicUrl,
                 sessionCookie: formData.linkedinCookie.trim(),
             });
+
+            if (response) {
+                Swal.close();
+            }
             if (response.status) {
+
                 setResults((prev) => (pageNum === 1 ? response.data : [...prev, ...response.data]));
-                console.log(response);
+
             }
         } catch (err) {
+            MySwal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!",
+                confirmButtonText: "Close",
+            });
             console.log(err);
         }
     };
