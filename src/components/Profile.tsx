@@ -12,7 +12,7 @@ interface User {
 }
 
 export default function ProfilePage() {
-    const { data, loading, error, callApi } = useApi();
+    const {  error, callApi } = useApi();
 
     const emptyUser: User = {
         id: 0,
